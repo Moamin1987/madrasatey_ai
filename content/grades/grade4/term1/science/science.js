@@ -2,12 +2,12 @@
 function displayLessons(){
   const container = document.getElementById('lessonsContainer');
   const lessons = [
-    {
-      title: 'الدرس الأول',
-      description: 'مقدمة في المادة',
-      type: 'pdf',
-      url: 'https://example.com/grade4/term1/science/lesson1.pdf'
-    },
+   {
+  title: 'مذكرة المجد',
+  description: 'العلوم حياتى',
+  type: 'pdf',
+  url: 'https://raw.githubusercontent.com/USERNAME/REPO/main/content/grades/grade4/term1/science/%D8%B9%D9%84%D9%88%D9%85%20%20%D8%A7%D9%84%D8%B5%D9%81%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%202026.pdf'
+},
     {
       title: 'الدرس الثاني',
       description: 'الأجزاء الأساسية',
