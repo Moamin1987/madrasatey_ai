@@ -6,7 +6,7 @@ function displayLessons(){
       title: 'مذكرة المجد',
       description: 'علوم الصف الرابع ترم اول 2026',
       type: 'pdf',
-      url: 'https://raw.githubusercontent.com/Moamin1987/madrasatey_ai/main/content/grades/grade4/term1/science/%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D8%B5%D9%81%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%202026.pdf'
+      url: 'https://raw.githubusercontent.com/Moamin1987/madrasatey_ai/main/content/grades/grade4/term1/science/%D8%B9%D9%84%D9%88%D9%85%20%20%D8%A7%D9%84%D8%B5%D9%81%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%202026.pdf'
     },
     {
       title: 'الدرس الثاني',
