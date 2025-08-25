@@ -1,0 +1,28 @@
+{
+  "grades": [
+    {
+      "id": "grade1",
+      "name": "الصف الأول",
+      "terms": [
+        {
+          "id": "term1",
+          "name": "الترم الأول",
+          "subjects": [
+            {
+              "id": "math",
+              "name": "الرياضيات",
+              "lessons": [
+                {
+                  "id": "lesson1",
+                  "title": "الدرس الأول: الجمع",
+                  "type": "pdf",
+                  "url": "lessons/grade1/term1/math/lesson1.pdf"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
