@@ -1,27 +1,123 @@
-function generate() {
-  let grade = document.getElementById("grade").value;
-  let term = document.getElementById("term").value;
-  let subject = document.getElementById("subject").value;
-  let lessonName = document.getElementById("lessonName").value.trim();
-  let fileName = document.getElementById("fileName").value.trim();
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>مولد بيانات الدروس المتقدم</title>
+  <style>
+    body { font-family: Tahoma, sans-serif; background: #f7f7f7; padding: 20px; }
+    .box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 5px #ccc; margin-bottom: 20px; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    select, input, button, textarea { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { background: #2196f3; color: white; border: none; cursor: pointer; font-size: 16px; }
+    button:hover { background: #1976d2; }
+    textarea { height: 250px; resize: vertical; }
+  </style>
+</head>
+<body>
 
-  if (!lessonName || !fileName) {
-    alert("من فضلك اكتب اسم الدرس واسم الملف!");
-    return;
-  }
+  <div class="box">
+    <h2>📘 مولد بيانات الدروس للتطبيق</h2>
 
-  // تحويل اسم الملف إلى صيغة آمنة للروابط
-  let safeFileName = encodeURIComponent(fileName);
+    <label>اختر الصف:</label>
+    <select id="grade">
+      <option value="grade1">الصف الأول</option>
+      <option value="grade2">الصف الثاني</option>
+      <option value="grade3">الصف الثالث</option>
+      <option value="grade4" selected>الصف الرابع</option>
+      <option value="grade5">الصف الخامس</option>
+      <option value="grade6">الصف السادس</option>
+    </select>
 
-  let rawUrl = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/lessons/${grade}/${term}/${subject}/${safeFileName}`;
+    <label>اختر الترم:</label>
+    <select id="term">
+      <option value="term1" selected>الترم الأول</option>
+      <option value="term2">الترم الثاني</option>
+    </select>
 
-  let lessonData = `
+    <label>اختر المادة:</label>
+    <select id="subject">
+      <option value="arabic">اللغة العربية</option>
+      <option value="math">الرياضيات</option>
+      <option value="science" selected>العلوم</option>
+      <option value="english">اللغة الإنجليزية</option>
+      <option value="religion">التربية الدينية</option>
+      <option value="social">الدراسات الاجتماعية</option>
+    </select>
+
+    <label>اكتب اسم الدرس:</label>
+    <input type="text" id="lessonName" placeholder="مثال: الدرس الأول: الماء">
+
+    <label>اكتب اسم الملف (PDF, PPT, DOCX, HTML… كما رفعته على GitHub):</label>
+    <input type="text" id="fileName" placeholder="مثال: lesson1.pdf">
+
+    <label>اختر نوع الملف (اختياري):</label>
+    <select id="fileType">
+      <option value="">تحديد تلقائي من الامتداد</option>
+      <option value="pdf">PDF</option>
+      <option value="ppt">PPT</option>
+      <option value="doc">DOC</option>
+      <option value="docx">DOCX</option>
+      <option value="html">HTML</option>
+      <option value="other">أخرى</option>
+    </select>
+
+    <button onclick="generate()">➕ توليد</button>
+  </div>
+
+  <div class="box">
+    <h3>📂 البيانات المتولدة:</h3>
+    <textarea id="output" readonly></textarea>
+    <button onclick="copyOutput()">📋 نسخ الكل</button>
+  </div>
+
+  <script>
+    const user = "Moamin1987"; // اسم المستخدم بتاعك في GitHub
+    const repo = "madrasaty-app"; // اسم الريبو
+    const branch = "main"; // الفرع
+
+    function getFileTypeFromExt(fileName) {
+      const ext = fileName.split('.').pop().toLowerCase();
+      if(['pdf','doc','docx','ppt','pptx','xls','xlsx'].includes(ext)) return 'file';
+      if(ext==='html') return 'html';
+      return 'other';
+    }
+
+    function generate() {
+      let grade = document.getElementById("grade").value;
+      let term = document.getElementById("term").value;
+      let subject = document.getElementById("subject").value;
+      let lessonName = document.getElementById("lessonName").value.trim();
+      let fileName = document.getElementById("fileName").value.trim();
+      let fileTypeSelect = document.getElementById("fileType").value;
+
+      if (!lessonName || !fileName) {
+        alert("من فضلك اكتب اسم الدرس واسم الملف!");
+        return;
+      }
+
+      let type = fileTypeSelect || getFileTypeFromExt(fileName);
+      let safeFileName = encodeURIComponent(fileName);
+
+      let rawUrl = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/lessons/${grade}/${term}/${subject}/${safeFileName}`;
+
+      let lessonData = `
 {
   "id": "${fileName.split('.')[0]}",
   "title": "${lessonName}",
-  "type": "pdf",
+  "type": "${type}",
   "url": "${rawUrl}"
 },`;
 
-  document.getElementById("output").value += lessonData + "\n";
-}
+      document.getElementById("output").value += lessonData + "\n";
+    }
+
+    function copyOutput() {
+      let output = document.getElementById("output");
+      output.select();
+      document.execCommand("copy");
+      alert("✅ تم نسخ البيانات!");
+    }
+  </script>
+
+</body>
+</html>
