@@ -1,80 +1,100 @@
-// ملف JavaScript خاص بمادة science - grade4 - term1
-function displayLessons(){
-  const container = document.getElementById('lessonsContainer');
-  const lessons = [
-   {
-  title: 'مذكرة المجد',
-  description: 'علوم  الصف الرابع ترم اول 2026',
-  type: 'pdf',
-https://raw.githubusercontent.com/Moamin1987/madrasatey_ai/main/content/grades/grade4/term1/science/%D8%B9%D9%84%D9%88%D9%85%20%20%D8%A7%D9%84%D8%B5%D9%81%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%20%D8%AA%D8%B1%D9%85%20%D8%A7%D9%88%D9%84%202026.pdf},
-    {
-      title: 'الدرس الثاني',
-      description: 'الأجزاء الأساسية',
-      type: 'text',
-      url: 'https://example.com/grade4/term1/science/lesson2.txt'
-    },
-    {
-      title: 'الدرس الثالث',
-      description: 'تطبيقات عملية',
-      type: 'pdf',
-      url: 'https://example.com/grade4/term1/science/lesson3.pdf'
-    }
-  ];
-  container.innerHTML='';
-  lessons.forEach((lesson, index)=>{
-    const el = document.createElement('div');
-    el.className = 'lesson-item';
-    el.innerHTML = `
-      <div class="lesson-info">
-        <h4>${lesson.title}</h4>
-        <p>${lesson.description}</p>
-        <div class="lesson-meta"><span><i class="fas fa-file"></i> ${lesson.type.toUpperCase()}</span></div>
-      </div>
-      <div class="lesson-actions">
-        <button class="action-btn" onclick="downloadLesson('${lesson.url}')"><i class="fas fa-download"></i> تحميل</button>
-      </div>`;
-    container.appendChild(el);
-    if(((index+1)%2)===0) insertNativeAd(container, index);
-  });
+// auto.js - ملف عام يعرض الدروس/الألعاب تلقائيًا لكل مادة من GitHub
+
+const GITHUB_USER = "Moamin1987";
+const GITHUB_REPO = "madrasatey_ai";
+const BRANCH = "main";
+
+// استنتاج مسار المجلد الحالي من الـ URL
+const pathParts = window.location.pathname.split("/").filter(Boolean);
+const currentSubjectPath = pathParts.slice(pathParts.indexOf("content")).join("/");
+
+// عنصر العرض في الصفحة
+const container = document.getElementById("lessonsContainer");
+
+// جلب قائمة الملفات من GitHub API
+async function fetchFiles() {
+  const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${currentSubjectPath}?ref=${BRANCH}`;
+  const response = await fetch(apiUrl);
+  if (!response.ok) {
+    container.innerHTML = "<p>تعذر تحميل المحتوى.</p>";
+    return [];
+  }
+  return await response.json();
 }
 
-function displayGames(){
-  const container = document.getElementById('lessonsContainer');
-  const games = [
-    {
-      title: 'لعبة تفاعلية',
-      description: 'اختبار الدرس الأول',
-      type: 'html',
-      url: 'https://example.com/grade4/term1/science/game1.html'
-    },
-    {
-      title: 'لعبة التطبيق',
-      description: 'تطبيق عملي للمفاهيم',
-      type: 'html',
-      url: 'https://example.com/grade4/term1/science/game2.html'
+// تصنيف الملفات إلى دروس أو ألعاب
+function classifyFiles(files) {
+  const lessons = [];
+  const games = [];
+  files.forEach(file => {
+    const ext = file.name.split(".").pop().toLowerCase();
+    if (ext === "html") {
+      games.push({
+        title: file.name.replace(/\.[^/.]+$/, ""),
+        url: file.download_url,
+        type: "html"
+      });
+    } else {
+      lessons.push({
+        title: file.name.replace(/\.[^/.]+$/, ""),
+        url: file.download_url,
+        type: ext
+      });
     }
-  ];
-  container.innerHTML='';
-  games.forEach((game, index)=>{
-    const el = document.createElement('div');
-    el.className = 'lesson-item';
-    el.innerHTML = `
-      <div class="lesson-info">
-        <h4>${game.title}</h4>
-        <p>${game.description}</p>
-        <div class="lesson-meta"><span><i class="fas fa-gamepad"></i> تفاعلي</span></div>
-      </div>
-      <div class="lesson-actions">
-        <button class="action-btn game" onclick="playGame('${game.url}')"><i class="fas fa-play"></i> العب</button>
-      </div>`;
-    container.appendChild(el);
-    insertNativeAd(container, index);
   });
+  return { lessons, games };
 }
 
-// تحميل المحتوى الافتراضي عند إدراج الملف
-if (typeof currentView !== 'undefined' && currentView === 'lessons') {
-  displayLessons();
-} else {
-  displayGames();
+// عرض الدروس
+function displayLessons(lessons) {
+  if (lessons.length === 0) return "";
+  return `
+    <h3>دروس ومذكرات</h3>
+    ${lessons
+      .map(
+        lesson => `
+      <div class="lesson-item">
+        <div class="lesson-info">
+          <h4>${lesson.title}</h4>
+          <div class="lesson-meta"><span>${lesson.type.toUpperCase()}</span></div>
+        </div>
+        <div class="lesson-actions">
+          <button class="action-btn" onclick="window.open('${lesson.url}','_blank')">تحميل</button>
+        </div>
+      </div>`
+      )
+      .join("")}
+  `;
 }
+
+// عرض الألعاب
+function displayGames(games) {
+  if (games.length === 0) return "";
+  return `
+    <h3>ذاكر والعب</h3>
+    ${games
+      .map(
+        game => `
+      <div class="lesson-item">
+        <div class="lesson-info">
+          <h4>${game.title}</h4>
+          <div class="lesson-meta"><span>تفاعلي</span></div>
+        </div>
+        <div class="lesson-actions">
+          <button class="action-btn game" onclick="window.open('${game.url}','_blank')">ابدأ</button>
+        </div>
+      </div>`
+      )
+      .join("")}
+  `;
+}
+
+// تحميل المحتوى
+async function loadContent() {
+  container.innerHTML = "<p>جارِ التحميل...</p>";
+  const files = await fetchFiles();
+  const { lessons, games } = classifyFiles(files);
+  container.innerHTML = displayLessons(lessons) + displayGames(games);
+}
+
+loadContent();
