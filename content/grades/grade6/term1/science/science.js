@@ -1,81 +1,55 @@
-// ملف JavaScript خاص بمادة science - grade6 - term1
-function displayLessons(){
-  const container = document.getElementById('lessonsContainer');
-  const lessons = [
-    {
-      title: 'الدرس الأول',
-      description: 'مقدمة في المادة',
-      type: 'pdf',
-      url: 'https://example.com/grade6/term1/science/lesson1.pdf'
-    },
-    {
-      title: 'الدرس الثاني',
-      description: 'الأجزاء الأساسية',
-      type: 'text',
-      url: 'https://example.com/grade6/term1/science/lesson2.txt'
-    },
-    {
-      title: 'الدرس الثالث',
-      description: 'تطبيقات عملية',
-      type: 'pdf',
-      url: 'https://example.com/grade6/term1/science/lesson3.pdf'
-    }
-  ];
-  container.innerHTML='';
-  lessons.forEach((lesson, index)=>{
+const items = [
+  { title: "الدرس الأول", description: "", type: "pdf", url: "الدرس الأول.pdf" },
+  { title: "الدرس الثاني", description: "", type: "pdf", url: "الدرس الثاني.pdf" },
+  { title: "لعبة تفاعلية", description: "", type: "html", url: "لعبة تفاعلية.html" }
+];
+
+async function displayContent(containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+
+  items.forEach((item, index) => {
     const el = document.createElement('div');
     el.className = 'lesson-item';
-    el.innerHTML = `
-      <div class="lesson-info">
-        <h4>${lesson.title}</h4>
-        <p>${lesson.description}</p>
-        <div class="lesson-meta"><span><i class="fas fa-file"></i> ${lesson.type.toUpperCase()}</span></div>
-      </div>
-      <div class="lesson-actions">
-        <button class="action-btn" onclick="downloadLesson('${lesson.url}')"><i class="fas fa-download"></i> تحميل</button>
-      </div>`;
+    const safeUrl = encodeURI(item.url);
+
+    if(item.type === 'html') {
+      el.innerHTML = `
+        <div class="lesson-info">
+          <h4>${item.title}</h4>
+          <p>${item.description}</p>
+          <div class="lesson-meta"><span><i class="fas fa-gamepad"></i> تفاعلي</span></div>
+        </div>
+        <div class="lesson-actions">
+          <button class="action-btn game" onclick="playGame('${safeUrl}')">
+            <i class="fas fa-play"></i> العب
+          </button>
+        </div>`;
+    } else {
+      el.innerHTML = `
+        <div class="lesson-info">
+          <h4>${item.title}</h4>
+          <p>${item.description}</p>
+          <div class="lesson-meta"><span><i class="fas fa-file"></i> ${item.type.toUpperCase()}</span></div>
+        </div>
+        <div class="lesson-actions">
+          <button class="action-btn" onclick="handleDownload('${safeUrl}')">
+            <i class="fas fa-download"></i> تحميل
+          </button>
+        </div>`;
+    }
+
     container.appendChild(el);
-    if(((index+1)%2)===0) insertNativeAd(container, index);
+    if(((index+1)%2)===0) insertNativeAd(container, index); // إعلان اختياري
   });
 }
 
-function displayGames(){
-  const container = document.getElementById('lessonsContainer');
-  const games = [
-    {
-      title: 'لعبة تفاعلية',
-      description: 'اختبار الدرس الأول',
-      type: 'html',
-      url: 'https://example.com/grade6/term1/science/game1.html'
-    },
-    {
-      title: 'لعبة التطبيق',
-      description: 'تطبيق عملي للمفاهيم',
-      type: 'html',
-      url: 'https://example.com/grade6/term1/science/game2.html'
-    }
-  ];
-  container.innerHTML='';
-  games.forEach((game, index)=>{
-    const el = document.createElement('div');
-    el.className = 'lesson-item';
-    el.innerHTML = `
-      <div class="lesson-info">
-        <h4>${game.title}</h4>
-        <p>${game.description}</p>
-        <div class="lesson-meta"><span><i class="fas fa-gamepad"></i> تفاعلي</span></div>
-      </div>
-      <div class="lesson-actions">
-        <button class="action-btn game" onclick="playGame('${game.url}')"><i class="fas fa-play"></i> العب</button>
-      </div>`;
-    container.appendChild(el);
-    insertNativeAd(container, index);
-  });
+function handleDownload(url) {
+  // لاحقًا يمكن إضافة إعلان قبل التحميل
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = '';
+  a.click();
 }
 
-// تحميل المحتوى الافتراضي عند إدراج الملف
-if (typeof currentView !== 'undefined' && currentView === 'lessons') {
-  displayLessons();
-} else {
-  displayGames();
-}
+displayContent('lessonsContainer');
