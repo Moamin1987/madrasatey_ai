@@ -1,22 +1,22 @@
 {
   "grades": [
     {
-      "id": "grade1",
-      "name": "الصف الأول",
+      "id": "grade4",
+      "name": "علوم الصف الرابع ترم أول 2026",
       "terms": [
         {
           "id": "term1",
           "name": "الترم الأول",
           "subjects": [
             {
-              "id": "math",
-              "name": "الرياضيات",
+              "id": "science",
+              "name": "العلوم",
               "lessons": [
                 {
                   "id": "lesson1",
-                  "title": "الدرس الأول: الجمع",
+                  "title": "الدرس الأول: الجهاز الهضمي",
                   "type": "pdf",
-                  "url": "lessons/grade1/term1/math/lesson1.pdf"
+                  "url": "lessons/grade4/term1/science/lesson1.pdf"
                 }
               ]
             }
