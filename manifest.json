@@ -1,0 +1,23 @@
+{
+  "name": "مدرستي",
+  "short_name": "مدرستي",
+  "description": "منصتك التعليمية الشاملة",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#764ba2",
+  "version": "1.0.0",
+  "icons": [
+    {
+      "src": "content/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "content/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

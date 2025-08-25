@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مدرستي - Madrasaty</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#667eea">
+  <link rel="apple-touch-icon" href="content/assets/icon-192.png">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+      <div class="header">
+        <div class="copyright-icon" onclick="showCopyright()">
+          <i class="fas fa-info"></i>
+        </div>
+        <div class="logo">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h1 class="app-title">مدرستي</h1>
+        <p class="app-subtitle">منصتك التعليمية الشاملة</p>
+        <p class="developer-name">تطوير: محمد أمين سلطان</p>
+      </div>
+
+      <div class="grade-buttons">
+        <button class="grade-btn" onclick="navigateToGrade('grade1')">
+          <i class="fas fa-child"></i> الصف الأول الابتدائي
+        </button>
+        <button class="grade-btn" onclick="navigateToGrade('grade2')">
+          <i class="fas fa-user-graduate"></i> الصف الثاني الابتدائي
+        </button>
+        <button class="grade-btn" onclick="navigateToGrade('grade3')">
+          <i class="fas fa-book"></i> الصف الثالث الابتدائي
+        </button>
+        <button class="grade-btn" onclick="navigateToGrade('grade4')">
+          <i class="fas fa-pencil"></i> الصف الرابع الابتدائي
+        </button>
+        <button class="grade-btn" onclick="navigateToGrade('grade5')">
+          <i class="fas fa-calculator"></i> الصف الخامس الابتدائي
+        </button>
+        <button class="grade-btn" onclick="navigateToGrade('grade6')">
+          <i class="fas fa-trophy"></i> الصف السادس الابتدائي
+        </button>
+        <button class="grade-btn games-btn" onclick="navigateToGames()">
+          <i class="fas fa-gamepad"></i> ذاكر والعب
+        </button>
+      </div>
+
+      <div class="footer">
+        <p>جميع الحقوق محفوظة © 2025 مدرستي</p>
+        <p>تطبيق تعليمي شامل لجميع المراحل الدراسية</p>
+        <p id="appVersion">الإصدار: 1.0.0</p>
+        <button id="updateButton" class="update-btn" onclick="updateApp()" style="display:none;">
+          <i class="fas fa-sync-alt"></i> تحديث متاح
+        </button>
+      </div>
+    </div>
+
+    <!-- Grade Page -->
+    <div id="gradePage" class="page">
+      <div class="container">
+        <button class="back-btn" onclick="goHome()">
+          <i class="fas fa-arrow-right"></i> العودة للرئيسية
+        </button>
+        <div class="header">
+          <div class="logo"><i class="fas fa-school"></i></div>
+          <h1 class="app-title" id="gradeTitle">الصف الأول الابتدائي</h1>
+          <p class="app-subtitle">اختر الترم الدراسي</p>
+        </div>
+        <div class="term-buttons">
+          <button class="term-btn" onclick="navigateToTerm('term1')">
+            <i class="fas fa-calendar-alt"></i> الترم الأول
+          </button>
+          <button class="term-btn" onclick="navigateToTerm('term2')">
+            <i class="fas fa-calendar-check"></i> الترم الثاني
+          </button>
+        </div>
+        <div class="footer">
+          <p>جميع الحقوق محفوظة © 2025 مدرستي</p>
+          <p>تطوير: محمد أمين سلطان</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Term Page -->
+    <div id="termPage" class="page">
+      <div class="container">
+        <div style="display:flex;gap:15px;margin-bottom:20px;">
+          <button class="back-btn" onclick="goToGrade()"><i class="fas fa-arrow-right"></i> العودة للصف</button>
+          <button class="back-btn" onclick="goHome()"><i class="fas fa-home"></i> الرئيسية</button>
+        </div>
+        <div class="header">
+          <div class="logo"><i class="fas fa-book-open"></i></div>
+          <h1 class="app-title" id="termTitle">الترم الأول</h1>
+          <p class="app-subtitle">اختر المادة الدراسية</p>
+        </div>
+        <div class="subjects-grid" id="subjectsContainer"></div>
+        <div class="footer">
+          <p>جميع الحقوق محفوظة © 2025 مدرستي</p>
+          <p>تطوير: محمد أمين سلطان</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subject Page -->
+    <div id="subjectPage" class="page">
+      <div class="container">
+        <div style="display:flex;gap:15px;margin-bottom:20px;">
+          <button class="back-btn" onclick="goToTerm()"><i class="fas fa-arrow-right"></i> العودة للمواد</button>
+          <button class="back-btn" onclick="goHome()"><i class="fas fa-home"></i> الرئيسية</button>
+        </div>
+        <div class="header">
+          <div class="logo"><i class="fas fa-book-open"></i></div>
+          <h1 class="app-title" id="subjectTitle">اللغة العربية</h1>
+          <p class="app-subtitle">الدروس والمذكرات</p>
+        </div>
+        <div class="subject-actions">
+          <button class="subject-action-btn" onclick="showLessons()">
+            <i class="fas fa-book-open"></i> دروس ومذكرات
+          </button>
+          <button class="subject-action-btn games-btn" onclick="showGames()">
+            <i class="fas fa-gamepad"></i> ذاكر والعب
+          </button>
+        </div>
+        <div id="lessonsContainer"></div>
+        <div class="footer">
+          <p>جميع الحقوق محفوظة © 2025 مدرستي</p>
+          <p>تطوير: محمد أمين سلطان</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Games Page -->
+    <div id="gamesPage" class="page">
+      <div class="container">
+        <button class="back-btn" onclick="goHome()">
+          <i class="fas fa-arrow-right"></i> العودة للرئيسية
+        </button>
+        <div class="header">
+          <div class="logo"><i class="fas fa-gamepad"></i></div>
+          <h1 class="app-title">ذاكر والعب</h1>
+          <p class="app-subtitle">ألعاب تعليمية ممتعة</p>
+        </div>
+        <div id="gamesContainer"></div>
+        <div class="footer">
+          <p>جميع الحقوق محفوظة © 2025 مدرستي</p>
+          <p>تطوير: محمد أمين سلطان</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright Popup -->
+  <div class="popup-overlay" id="copyrightPopup">
+    <div class="popup-content">
+      <div class="popup-title"><i class="fas fa-copyright"></i> حقوق الملكية</div>
+      <div class="popup-text">
+        <p><strong>تطبيق مدرستي</strong></p>
+        <p>جميع الحقوق محفوظة © 2025</p><br>
+        <p>الملفات والدروس الموجودة هنا لطلابنا لتسهيل التعلم.</p>
+        <p>إذا كان أي ملف ملكًا لأحد المعلمين ويرغب في حذفه، يمكنه التواصل معنا مباشرة.</p>
+        <p>هدفنا فقط نشر المعرفة ومساعدة الطلاب، وليس لأي غرض تجاري.</p>
+        <p>شكرًا لتفهمكم!</p><br>
+        <p>للاستفسارات: info@madrasaty.edu</p>
+        <p>تطوير: محمد أمين سلطان - أخصائي أول تطوير تكنولوجي في التربية والتعليم</p>
+      </div>
+      <button class="close-btn" onclick="hideCopyright()"><i class="fas fa-times"></i> إغلاق</button>
+    </div>
+  </div>
+
+  <!-- Ad Popup -->
+  <div class="popup-overlay" id="adPopup">
+    <div class="popup-content">
+      <div class="popup-title"><i class="fas fa-ad"></i> إعلان</div>
+      <div class="popup-text">
+        <p>شاهد الإعلان للحصول على المادة مجاناً</p>
+        <p>يدعمك هذا في الحفاظ على التطبيق مجانياً للجميع</p>
+        <div class="ad-container">
+          <div class="ad-placeholder">جاري تحميل الإعلان...</div>
+        </div>
+        <div class="ad-countdown" id="adCountdown">15</div>
+      </div>
+      <div class="ad-buttons">
+        <button class="close-btn" onclick="skipAd()">تخطي الإعلان</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast (Update notifications) -->
+  <div id="toast" class="toast" role="status" aria-live="polite">هناك تحديث جديد متاح</div>
+
+  <script src="js/ads.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>
